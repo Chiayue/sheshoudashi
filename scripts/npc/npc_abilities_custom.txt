@@ -4901,4 +4901,15 @@
 		"AbilityUnitTargetType"	""
 		"AbilityUnitTargetTeam"	""
 	}
+
+	"ability_the_injury"
+	{
+		"BaseClass"	"ability_lua"
+		"AbilityTextureName"	"random"
+		"ScriptFile"	"ability/mechanism_Boss/ability_the_injury"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"40"
+	}
 }

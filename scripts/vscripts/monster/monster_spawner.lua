@@ -56,7 +56,7 @@ function MobSpawner:OnThink()
         MobSpawner:OnAddExperience(now)
 
     --每周自闭模式
-    elseif GlobalVarFunc.game_type==101 then
+    elseif GlobalVarFunc.game_type==1001 then
 
         --判断是否刷池子怪
         MobSpawner:OnNowTotalMonsterNum()
@@ -64,6 +64,9 @@ function MobSpawner:OnThink()
         MobSpawner:totalMonsterNum()
         --无尽模式
         self:OnGameModeEndless(now)
+
+    --深渊模式
+    elseif GlobalVarFunc.game_type==1002 then
 
     else
         --判断是否刷池子怪
@@ -73,7 +76,7 @@ function MobSpawner:OnThink()
         MobSpawner:totalMonsterNum()
         
         --判断当前游戏模式
-        if GlobalVarFunc.game_type~=100 then
+        if GlobalVarFunc.game_type~=1000 then
             --普通模式
             self:OnGameModeNormal(now)
         else
@@ -170,7 +173,7 @@ function MobSpawner:SpawnNextWave()
     GlobalVarFunc:OnOpenDoor()
     
     --每周自闭模式
-    if GlobalVarFunc.game_type==101 then
+    if GlobalVarFunc.game_type==1001 then
         --野怪池子的数量
         spawner_config.monsterSurplusNum = 800
         GlobalVarFunc.monsterIsShuaMan = false
@@ -182,7 +185,7 @@ function MobSpawner:SpawnNextWave()
         
         self:OnWeeklySpawnBossEndless()
 
-    elseif GlobalVarFunc.game_type~=100 then
+    elseif GlobalVarFunc.game_type~=1000 then
         --开始随机事件
         RandomEvents():Start()
 
@@ -213,7 +216,7 @@ function MobSpawner:SpawnNextWave()
     end
 
     --更新gameInfo网表信息
-    GameMode:UpdateGameInfoNetTable({gameMode = GlobalVarFunc.game_type,gameWaves = spawner_config.mosterWave})
+    GameMode:UpdateGameInfoNetTable({gameMode = GlobalVarFunc.game_mode, gameType = GlobalVarFunc.game_type, gameWaves = spawner_config.mosterWave})
 
 end
 
@@ -734,7 +737,7 @@ function MobSpawner:OnSpawnMonster()
         mob:AddAbility(ability)
     end
 
-    if GlobalVarFunc.game_type == 101 then
+    if GlobalVarFunc.game_type == 1001 then
         --增加移动速度
         mob:AddAbility("ability_zibi")
         --设置该生物每级增加的控制抗性 
@@ -789,7 +792,7 @@ end
 --野怪攻击力
 function MobSpawner:_AttackDamage()
     local attack = ((spawner_config.mosterWave-1)*(spawner_config.mosterWave-1)*20+30)*(GlobalVarFunc.duliuLevel*0.05 + 1) * GlobalVarFunc.MonsterViolent
-    if GlobalVarFunc.game_type ~= 100 and GlobalVarFunc.game_type ~= 101 then
+    if GlobalVarFunc.game_mode == "common" then
         return attack * (GlobalVarFunc.game_type*0.3+0.5)
     else
         if spawner_config.mosterWave > 20 then
@@ -810,7 +813,7 @@ function MobSpawner:_Health()
         health = health *2
     end
 
-    if GlobalVarFunc.game_type ~= 100 and GlobalVarFunc.game_type ~= 101 then
+    if GlobalVarFunc.game_mode == "common" then
         return health * (GlobalVarFunc.game_type*0.3+0.5)
     else
         if spawner_config.mosterWave > 20 then
@@ -834,8 +837,9 @@ function MobSpawner:_DeathGold()
 end
 
 function MobSpawner:_Armor() 
-    if GlobalVarFunc.game_type == 100 or GlobalVarFunc.game_type == 101 then
-
+    if GlobalVarFunc.game_mode == "common" then
+        return spawner_config.mosterWave
+    else
         if spawner_config.mosterWave>69 then
             return 400
         elseif spawner_config.mosterWave>39 then
@@ -845,9 +849,6 @@ function MobSpawner:_Armor()
         else
             return spawner_config.mosterWave
         end
-
-    else
-        return spawner_config.mosterWave
     end
 end
 
@@ -883,7 +884,7 @@ end
 function MobSpawner:OnNowTotalMonsterNum()
     if GlobalVarFunc.monsterIsShuaMan then
 
-        if GlobalVarFunc.game_type ~= 100 and GlobalVarFunc.game_type ~= 101 then
+        if GlobalVarFunc.game_mode == "common" then
             if spawner_config.monsterNumber < spawner_config.monsterNumMax and spawner_config.monsterSurplusNum > 0 then
                 for i=1,2 do
                     self:OnSpawnMonster()

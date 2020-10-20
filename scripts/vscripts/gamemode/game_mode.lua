@@ -6,6 +6,7 @@ local game_info = {}
 
 function GameMode:Start()
     print("GameMode Start")
+    game_info["gameModeClass"] = "common"
     game_info["gameMode"] = 0
     game_info["monsterWaves"] = 0
     game_info["gameOver_state"] = -3
@@ -15,9 +16,11 @@ function GameMode:Start()
     ListenToGameEvent( "player_team" ,Dynamic_Wrap(GameMode,"_OnPlayerTeam"),self)
 end
 
-function GameMode:OnSelectionGameMode(index)
-    GlobalVarFunc.game_type = index.gameMode
-    game_info["gameMode"] = index.gameMode 
+function GameMode:OnSelectionGameMode(data)
+    GlobalVarFunc.game_mode =  data.gameMode
+    GlobalVarFunc.game_type = data.gameType
+    game_info["gameModeClass"] = data.gameMode
+    game_info["gameMode"] = data.gameType
     CustomNetTables:SetTableValue( "gameInfo","gameInfo", game_info)
 end
 
@@ -27,7 +30,8 @@ function GameMode:_OnPlayerTeam(event)
 end
 
 function GameMode:UpdateGameInfoNetTable(data)
-    game_info["gameMode"] = data.gameMode
+    game_info["gameModeClass"] = data.gameMode
+    game_info["gameMode"] = data.gameType
     game_info["monsterWaves"] = data.gameWaves
     CustomNetTables:SetTableValue( "gameInfo","gameInfo", game_info)
 end
@@ -44,6 +48,7 @@ function GameMode:OnUpdata_loading(data)
         --设置默认游戏模式
         GlobalVarFunc.game_type = Archive:GetData(0,"gamaModeNum") + 1
         game_info["gameMode"] = GlobalVarFunc.game_type
+        game_info["gameModeClass"] = GlobalVarFunc.game_mode
         CustomNetTables:SetTableValue( "gameInfo","gameInfo", game_info)
         CustomGameEventManager:Send_ServerToAllClients("show_unlock",playerData)
         return nil

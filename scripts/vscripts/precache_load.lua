@@ -41,6 +41,7 @@ return {
 		"particles/diy_particles/ambient12.vpcf",
 		"particles/econ/items/templar_assassin/templar_assassin_focal/ta_focal_base_attack.vpcf",
 		"particles/radiant_fx2/fs_altar_ascension.vpcf",
+		"models/npc/shinai/shinai.vmdl",
 	},
 
 	soundfile = {

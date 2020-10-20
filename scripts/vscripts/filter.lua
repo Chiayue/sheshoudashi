@@ -127,7 +127,7 @@ function Filter:DamageFilter( params )
 			RandomEvents:InputPlayersBoxDamage(nPlayerID,params.damage)
         end
         
-        if GlobalVarFunc.game_type ~= 100 and GlobalVarFunc.game_type ~= 101 then
+        if GlobalVarFunc.game_mode ~= "endless" then
 	        GlobalVarFunc.damage[nPlayerID+1] = GlobalVarFunc.damage[nPlayerID+1] + params.damage
 		elseif string.sub(targetName,0,22)  == "npc_dota_creature_boss" then
 			GlobalVarFunc.damage[nPlayerID+1] = GlobalVarFunc.damage[nPlayerID+1] + params.damage

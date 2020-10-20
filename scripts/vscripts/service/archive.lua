@@ -33,7 +33,7 @@ function Archive:StageChange()
 end
 
 function Archive:RecursionEquiLoading()
-	if GlobalVarFunc.game_type == 100 or GlobalVarFunc.game_type == 101 then
+	if GlobalVarFunc.game_mode == "endless" then
 		if Archive:CheckEquiLoading() == false then
 			Timer(3,function()
 	            Archive:RecursionEquiLoading()

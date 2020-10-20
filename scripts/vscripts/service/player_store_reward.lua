@@ -229,12 +229,7 @@ function modifier_store_reward_sage_stone:OnCreated()
 	if not IsServer() then return end
 	self:IncrementStackCount()
 	local hCaster = self:GetParent()
-	--hCaster.Store["sage_stone"] = ParticleManager:CreateParticle("particles/econ/courier/courier_cluckles/patchouli_sorcererstone.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 end
-
--- function modifier_store_reward_sage_stone:GetEffectName()
--- 	return "particles/econ/courier/courier_cluckles/patchouli_sorcererstone.vpcf"
--- end
 
 function modifier_store_reward_sage_stone:DeclareFunctions() 
 	local funcs = {
@@ -380,13 +375,6 @@ function modifier_store_reward_arrow_infinite_effect:OnDestroy()
 	ParticleManager:DestroyParticle(self.nFXIndex,true)
 end
 
--- function modifier_store_reward_arrow_infinite:OnCreated() 
--- 	if not IsServer() then return end
--- 	self:IncrementStackCount()
--- 	local hCaster = self:GetParent()
--- 	hCaster.Store["arrow_infinite"] = ParticleManager:CreateParticle("particles/diy_particles/ambient5.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
--- end
-
 ----------- 无双金龙 -----------
 if modifier_store_reward_golden_dragon  == nil then modifier_store_reward_golden_dragon = class(modifier_store_reward) end
 function modifier_store_reward_golden_dragon:DeclareFunctions()
@@ -402,12 +390,6 @@ end
 function modifier_store_reward_golden_dragon:GetModifierBonusStats_Agility() return 15 * self:GetStackCount() end
 function modifier_store_reward_golden_dragon:GetModifierBonusStats_Intellect() return 15 * self:GetStackCount() end
 function modifier_store_reward_golden_dragon:GetModifierBonusStats_Strength() return 15 * self:GetStackCount() end
--- function modifier_store_reward_golden_dragon:OnCreated() 
--- 	if not IsServer() then return end
--- 	self:IncrementStackCount()
--- 	local hCaster = self:GetParent()
--- 	hCaster.Store["golden_dragon"] = ParticleManager:CreateParticle("particles/diy_particles/ambient12.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
--- end
 -- 对应特效
 if modifier_store_reward_golden_dragon_effect == nil then modifier_store_reward_golden_dragon_effect = class(modifier_store_reward_effect) end
 function modifier_store_reward_golden_dragon_effect:OnCreated() 

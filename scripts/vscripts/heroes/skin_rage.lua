@@ -34,4 +34,9 @@ return {
 		attack_projectile = "particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf",
 		wearables = {},
 	},
+	{	-- 5 诗乃
+		model = "models/npc/shinai/shinai.vmdl",
+		attack_projectile = "particles/diy_particles/shinai_attack.vpcf",
+		wearables = {},
+	},
 }

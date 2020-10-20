@@ -206,7 +206,7 @@ function Player_Select_Ability:Talent_Selected(args)
         CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"show_arrowSoul_meditationButton",{})
        	
 	    -- 无尽模式下注册背包和UI
-	    if GlobalVarFunc.game_type == 100 or GlobalVarFunc.game_type == 101 or  GlobalVarFunc.game_type == -2 then
+	    if GlobalVarFunc.game_mode == "endless" or  GlobalVarFunc.game_type == -2 then
 	    	InventoryBackpack:RegisterUnit( hNewHero )
 	    	local hArchiveEqui =  Archive:GetPlayerEqui(nPlayerID)
 	    	print("GetPlayerEqui")
@@ -226,10 +226,6 @@ function Player_Select_Ability:Talent_Selected(args)
 			local baowu = hNewHero:AddItemByName("item_study_passive_lv3")
 			baowu:SetCurrentCharges(5)
 			PlayerResource:ModifyGold(nPlayerID,99999,true,DOTA_ModifyGold_Unspecified)
-			if GlobalVarFunc.game_type == 100 then
-				
-		  	end
-
 		  	if GlobalVarFunc.game_type == -2 then 
 		  		Player_Data():AddPoint(nPlayerID,1000000)
 		  	end
@@ -240,7 +236,7 @@ function Player_Select_Ability:Talent_Selected(args)
 	   		ArrowSoulCompensate:CheckReward( hNewHero )
 	   	end)
 	   	-- 自闭模式
-	   	if  GlobalVarFunc.game_type == 101 then
+	   	if  GlobalVarFunc.game_type == 1001 then
 	   		hNewHero:AddNewModifier(hNewHero, nil, "modifier_autistic_every_week", {})
 	   	end
     end
@@ -345,7 +341,7 @@ function Player_Select_Ability:Deputy_Selected( args )
 	    local Ability = hHero:AddAbility(sAbilityName)
 	   	Ability:SetLevel(1)
 	   	-- 无尽模式
-	   	if GlobalVarFunc.game_type == 100 or GlobalVarFunc.game_type == 101 then
+	   	if GlobalVarFunc.game_mode == "endless" then
 	   		deputy_2nd:SetHidden(false)
 	   		deputy_2nd:SetLevel(1)
 	   	end

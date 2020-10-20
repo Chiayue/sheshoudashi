@@ -78,7 +78,9 @@ end
 
 
 -- <==============================全局变量================================>
---游戏模式选择:-2表示挂机模式，0表示序章，1表示第一章，2表示第二章，3表示第三章........100表示无尽模式
+--游戏模式分类：   普通(默认)："common"    挂机："hook"      无尽："endless"     
+GlobalVarFunc.game_mode =  "common"
+--游戏模式选择:-2表示挂机模式，0表示序章，1表示第一章，2表示第二章........1000表示无尽模式, 1001表示自闭模式
 GlobalVarFunc.game_type = 0
 --记录游戏玩家数
 GlobalVarFunc.playersNum = 0
@@ -190,7 +192,7 @@ end
 
 --随机播放boss音效
 function GlobalVarFunc:OnRandomBossSound()
-	if GlobalVarFunc.game_type ~= 100 and GlobalVarFunc.game_type ~= 101 then
+	if GlobalVarFunc.game_mode == "common" then
 
 		local random = RandomInt(1,7)
 		GlobalVarFunc.boss_sound = "custom_music.bossBgm_"..random

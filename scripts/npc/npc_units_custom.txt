@@ -9699,4 +9699,31 @@
 		"VisionNighttimeRange"	"500"
 		"TeamName"	"DOTA_TEAM_NEUTRALS"
 	}
+
+	"npc_dota_creature_boss_troops"
+	{
+		"BaseClass"	"npc_dota_creature"
+		"Ability1"	"the_injury"
+		"Ability2"	""
+		"Ability3"	""
+		"Ability4"	""
+		"Ability5"	""
+		"Ability6"	""
+		"Ability7"	""
+		"Ability8"	""
+		"Ability9"	""
+		"Ability10"	""
+		"Ability11"	""
+		"Ability12"	""
+		"Ability13"	""
+		"Ability14"	""
+		"Ability15"	""
+		"Ability16"	""
+		"Model"	"models/creeps/neutral_creeps/n_creep_centaur_lrg/n_creep_centaur_lrg.vmdl"
+		"ModelScale"	"1.2"
+		"HealthBarOffset"	"200"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
+		"vscripts"	"ability/mechanism_Boss/ai/troops_ability_ai"
+	}
 }

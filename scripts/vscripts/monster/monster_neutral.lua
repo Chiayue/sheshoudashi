@@ -82,7 +82,7 @@ function MonsterNeutral:OnCreateMonster(Vec)
     local monster = CreateUnitByName(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     --monster:SetRenderColor(0, 0, 0) 
 
-    if GlobalVarFunc.game_type == 101 then
+    if GlobalVarFunc.game_type == 1001 then
         --增加移动速度
         monster:AddAbility("ability_zibi")
         --设置该生物每级增加的控制抗性 
@@ -125,7 +125,7 @@ end
 --野怪攻击力
 function MonsterNeutral:_AttackDamage()
     local attack = ((spawner_config.mosterWave-1)*(spawner_config.mosterWave-1)*20+30)*(GlobalVarFunc.duliuLevel*0.05 + 1) * GlobalVarFunc.MonsterViolent
-    if GlobalVarFunc.game_type ~= 100 and GlobalVarFunc.game_type ~= 101 then
+    if GlobalVarFunc.game_mode == "common" then
         return attack * (GlobalVarFunc.game_type*0.3+0.5)
     else
         if spawner_config.mosterWave > 20 then
@@ -146,7 +146,7 @@ function MonsterNeutral:_Health()
         health = health *2
     end
 
-    if GlobalVarFunc.game_type ~= 100 and GlobalVarFunc.game_type ~= 101 then
+    if GlobalVarFunc.game_mode == "common" then
         return health * (GlobalVarFunc.game_type*0.3+0.5)
     else
         if spawner_config.mosterWave > 20 then
@@ -171,44 +171,18 @@ end
 
 function MonsterNeutral:_Armor() 
     
-    if GlobalVarFunc.game_type == 100 or GlobalVarFunc.game_type == 101 then
-
-        -- if MAP_CODE == "archers_survive_test" then
-            --测试服护甲
-            if spawner_config.mosterWave>69 then
-                return 400
-            elseif spawner_config.mosterWave>39 then
-                return 146
-            elseif spawner_config.mosterWave>20 then
-                return 68
-            else
-                return spawner_config.mosterWave
-            end
-        -- else
-        --     --正式服护甲
-        --     if spawner_config.mosterWave>89 then
-        --         return 939 + (spawner_config.mosterWave-90)*15
-        --     elseif spawner_config.mosterWave>79 then
-        --         return 798 + (spawner_config.mosterWave-80)*14
-        --     elseif spawner_config.mosterWave>69 then
-        --         return 667 + (spawner_config.mosterWave-70)*13
-        --     elseif spawner_config.mosterWave>59 then
-        --         return 546 + (spawner_config.mosterWave-60)*12
-        --     elseif spawner_config.mosterWave>49 then
-        --         return 435 + (spawner_config.mosterWave-50)*11
-        --     elseif spawner_config.mosterWave>39 then
-        --         return 334 + (spawner_config.mosterWave-40)*10
-        --     elseif spawner_config.mosterWave>29 then
-        --         return 243 + (spawner_config.mosterWave-30)*9
-        --     elseif spawner_config.mosterWave>20 then
-        --         return 170 + (spawner_config.mosterWave-20)*8
-        --     else
-        --         return spawner_config.mosterWave
-        --     end
-        -- end
-        
-    else
+    if GlobalVarFunc.game_mode == "common" then
         return spawner_config.mosterWave
+    else
+        if spawner_config.mosterWave>69 then
+            return 400
+        elseif spawner_config.mosterWave>39 then
+            return 146
+        elseif spawner_config.mosterWave>20 then
+            return 68
+        else
+            return spawner_config.mosterWave
+        end
     end
 
 end

@@ -121,12 +121,12 @@ function game_playerinfo:update_playerInfo()
     
                 end
     
-                if GlobalVarFunc.game_type==100 or GlobalVarFunc.game_type==101 then
+                if GlobalVarFunc.game_mode == "endless" then
                     if Archive:GetData(PlayerID,"endless_waves") <= GlobalVarFunc.MonsterWave then
                         Archive:EditPlayerProfile(PlayerID,"endless_waves",GlobalVarFunc.MonsterWave)
                     end
 
-                    if GlobalVarFunc.game_type==101 then
+                    if GlobalVarFunc.game_type==1001 then
                         local weekly_wavesNum = Archive:GetData(PlayerID,"weekly_waves") + GlobalVarFunc.MonsterWave
                         Archive:EditPlayerProfile(PlayerID,"weekly_waves",weekly_wavesNum)
                         
@@ -157,11 +157,9 @@ function game_playerinfo:update_playerInfo()
 end
 
 function game_playerinfo:OnWeekly_wavesReward(nPlayerID)
-    if GlobalVarFunc.game_type == 101 then
-        if GlobalVarFunc.MonsterWave >= 200 then
-            local game_time = 30*60 + Archive:GetData(nPlayerID,"game_time")
-            Archive:EditPlayerProfile(nPlayerID,"game_time",game_time)
-        end
+    if GlobalVarFunc.MonsterWave >= 200 then
+        local game_time = 30*60 + Archive:GetData(nPlayerID,"game_time")
+        Archive:EditPlayerProfile(nPlayerID,"game_time",game_time)
     end
 end
 
@@ -174,7 +172,7 @@ function game_playerinfo:OnArrowSoulReward(nPlayerID)
     local nReward = GlobalVarFunc.arrowSoulRewardCoefficient[nPlayerID+1]
     if isHaveArrowSoulReward == true then nReward = nReward + 0.35 end
     local nBaseArrowSoulReward = 0
-    if GlobalVarFunc.game_type==100 or GlobalVarFunc.game_type==101 then
+    if GlobalVarFunc.game_mode == "endless" then
         if GlobalVarFunc.MonsterWave >= 70 then
             nBaseArrowSoulReward = 100
         elseif GlobalVarFunc.MonsterWave >= 60 then

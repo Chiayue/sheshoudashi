@@ -79,10 +79,21 @@ function MonsterOperate:OnCreateMonster(PlayerID,index)
     bigBoss.operateID = tostring(PlayerID)
     bigBoss.operateIndex = tostring(index) 
     MonsterOperate:setMonsterBaseInformation(bigBoss,index)
-    
-    Timer(60, function()
-        UTIL_Remove(bigBoss)
-    end)
+
+    local time = 60
+    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_creep_think"), 
+    function()
+        if GameRules:IsGamePaused() then
+            return 0.1
+        end
+        if time > 0 then
+            time = time - 1
+            return 1
+        else
+            UTIL_Remove(bigBoss)
+            return nil
+        end
+    end, 0)  
 end
 
 function MonsterOperate:setMonsterBaseInformation(bigBoss,index)

@@ -57,7 +57,7 @@ function ItemIsGem(hItem)
 end
 function InventorySystem:Init()
 	--ListenToGameEvent( "game_rules_state_change" ,Dynamic_Wrap( self, 'StageChange' ), self )
-	if GlobalVarFunc.game_type == 100 or GlobalVarFunc.game_type == 101 or  GlobalVarFunc.game_type == -2 then
+	if GlobalVarFunc.game_mode == "endless" or  GlobalVarFunc.game_type == -2 then
 		GameRules: GetGameModeEntity(): SetExecuteOrderFilter(Dynamic_Wrap(self,"ExecuteOrderFilter"),self)
 		GameRules: GetGameModeEntity(): SetItemAddedToInventoryFilter(Dynamic_Wrap(self, 'ItemAddedToInventory'), self)
 		local BackpackCount = {}

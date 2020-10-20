@@ -56,9 +56,11 @@ local hRewardTable = {
 	},
 	[188898517] = { 
 		["npc_dota_hero_troll_warlord"] = {
-			["skin_id"] = 4,
-			["model"] = "models/npc/spirit_archer/spirit_archer.vmdl",
-			["model_scale"] = 0.65
+			["skin_id"] = 5,
+			["model_scale"] = 1.4,
+			["particle"] = {
+				["particles/diy_particles/shinai_ambient.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
+			},
 		}
 		
 	},
@@ -68,7 +70,6 @@ local hRewardTable = {
 			["model"] = "models/npc/spirit_archer/spirit_archer.vmdl",
 			["model_scale"] = 0.65
 		}
-		
 	},
 	[104282686] = { 
 		["npc_dota_hero_troll_warlord"] = {
@@ -76,15 +77,15 @@ local hRewardTable = {
 			["model"] = "models/npc/spirit_archer/spirit_archer.vmdl",
 			["model_scale"] = 0.65
 		}
-		
 	},
 	[162191065] = { 
 		["npc_dota_hero_troll_warlord"] = {
-			["skin_id"] = 4,
-			["model"] = "models/npc/spirit_archer/spirit_archer.vmdl",
-			["model_scale"] = 0.65
+			["skin_id"] = 5,
+			["model_scale"] = 1.4,
+			["particle"] = {
+				["particles/diy_particles/shinai_ambient.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
+			},
 		}
-		
 	},
 }
 
@@ -99,10 +100,11 @@ function CustomizedReward:SetReward(hHero)
 		local sHeroName = hHero:GetUnitName()
 		local hRewardInfo = hRewardList[sHeroName]
 		if hRewardInfo ~= nil then
-			if hRewardInfo["model"] ~= nil then  hHero:SetModel(hRewardInfo["model"]) end
-			if hRewardInfo["model_scale"] ~= nil then  hHero:SetModelScale(hRewardInfo["model_scale"]) end
 			local nSkinID = hRewardInfo["skin_id"]
 			if nSkinID ~= nil then  HeroesSkin:ChangeSkin(hHero,nSkinID) end
+			if hRewardInfo["model"] ~= nil then  hHero:SetModel(hRewardInfo["model"]) end
+			if hRewardInfo["model_scale"] ~= nil then  hHero:SetModelScale(hRewardInfo["model_scale"]) end
+			
 			local sAuraParticels = hRewardInfo["particle"] or {}
 			local hAttr = hRewardInfo["attr"]
 			local hCustomized = {}

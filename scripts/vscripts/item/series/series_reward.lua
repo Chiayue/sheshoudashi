@@ -105,7 +105,7 @@ function modifier_series_reward_talent_flame_effect:DeclareFunctions()
 	}
 end
 function modifier_series_reward_talent_flame_effect:OnTooltip()
-	return self:GetStackCount() * 5
+	return self:GetStackCount() * 3
 end
 if modifier_series_reward_talent_clod == nil then modifier_series_reward_talent_clod = class(modifier_series_reward_talent) end
 function modifier_series_reward_talent_clod:GetTexture() return "archon_passive_ice" end
@@ -116,15 +116,15 @@ function modifier_series_reward_talent_vitality:OnRefresh()
 	if not IsServer() then return end
 	self:IncrementStackCount()
 	local nStack = self:GetStackCount()
-	if nStack >= 3 then self:StartIntervalThink( 10 ) else self:StartIntervalThink( -1 ) end
+	if nStack >= 3 then self:StartIntervalThink( 2 ) else self:StartIntervalThink( -1 ) end
 end
 function modifier_series_reward_talent_vitality:OnIntervalThink()
 	local hCaster = self:GetParent() 
-	-- 恢复最大20%和100%魔法值
+	-- 恢复最大5%和100%魔法值
 	local nMaxMana = hCaster:GetMaxMana()
 	hCaster:GiveMana(nMaxMana)
 	local nMaxHealth = hCaster:GetMaxHealth()
-	local nHealHealth = nMaxHealth * 0.2
+	local nHealHealth = nMaxHealth * 0.05
 	hCaster:Heal( nHealHealth, hCaster )
 	local EffectName = "particles/econ/events/ti6/mekanism_ti6.vpcf"
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hCaster)

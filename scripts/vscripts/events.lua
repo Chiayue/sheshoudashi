@@ -6,14 +6,11 @@ function CAddonTemplateGameMode:OnEntityKill(event)
 
         --无尽 boss
         if killedUnit:GetContext("boss") then
-            if GlobalVarFunc.game_type==100 or GlobalVarFunc.game_type==101 then
+            if GlobalVarFunc.game_mode == "endless" then
 
                 GlobalVarFunc.endless_boss_isAlive = false 
-        
-                if spawner_config.mosterWave>10 and spawner_config.mosterWave%10==0 then
-                    --无尽存档装备掉落
-                    self:OnBossCreatedSeriesItem()
-                end
+                --无尽存档装备掉落
+                self:OnBossCreatedSeriesItem()
 
             else
                 --停止boss音效
@@ -23,7 +20,7 @@ function CAddonTemplateGameMode:OnEntityKill(event)
 
         spawner_config.monsterTable[tostring(event.entindex_killed)] = nil
 
-        if GlobalVarFunc.game_type~=100 and GlobalVarFunc.game_type~=101 then
+        if GlobalVarFunc.game_mode == "common" then
             self:IsGoodguysWinner()
         end
 
@@ -90,7 +87,7 @@ function CAddonTemplateGameMode:IsBadguysWinner()
         end
     end
     --单个玩家普通章节死亡游戏不结束，多1条命
-    if GlobalVarFunc.playersNum == 1 and GlobalVarFunc.game_type ~= 100 and GlobalVarFunc.game_type ~= 101 then
+    if GlobalVarFunc.playersNum == 1 and GlobalVarFunc.game_mode == "common" then
         if GlobalVarFunc.singlePlayerLife == 0 then
             self:OnSetBadguysWinner()
         else
@@ -170,56 +167,61 @@ end
 
 --存档装备掉落
 function CAddonTemplateGameMode:OnBossCreatedSeriesItem()
-    for nPlayerID = 0, MAX_PLAYER - 1 do
-        local nPlayer = PlayerResource:GetPlayer(nPlayerID)
-        if nPlayer ~= nil then
-            local aHero = nPlayer:GetAssignedHero()
-            local randNum = RandomInt(1,100)
-            if spawner_config.mosterWave >= 180  then
-                if randNum <= 45 then
-                    SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
-                else
-                    SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
-                end
-            elseif spawner_config.mosterWave >= 70  then
-                if randNum <= 35 then
-                    SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
-                else
-                    SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
-                end
-            elseif spawner_config.mosterWave == 60  then
-                if randNum <= 25 then
-                    SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
-                else
-                    SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
-                end
-            elseif spawner_config.mosterWave == 50  then
-                if randNum <= 15 then
-                    SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
-                else
-                    SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
-                end
-            elseif spawner_config.mosterWave == 40 then 
-                if randNum <= 5 then
-                    SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
-                elseif randNum <= 50 then
-                    SeriseSystem:CreateSeriesItem(aHero,3,1,2)        -- T2
-                else
-                    SeriseSystem:CreateSeriesItem(aHero,2,1,1)        -- T1
-                end
-            elseif spawner_config.mosterWave == 30 then
-                if randNum <= 20 then
-                    SeriseSystem:CreateSeriesItem(aHero,3,1,2)       -- T2
-                else
-                    SeriseSystem:CreateSeriesItem(aHero,2,1,1)       -- T1
-                end
-            elseif spawner_config.mosterWave == 20 then
-                SeriseSystem:CreateSeriesItem(aHero,2,1,1)         -- T1
-            end
 
-            --无尽装备存档
-            Archive:SaveServerEqui(nPlayerID)
+    if spawner_config.mosterWave>10 and spawner_config.mosterWave%10==0 then
+
+        for nPlayerID = 0, MAX_PLAYER - 1 do
+            local nPlayer = PlayerResource:GetPlayer(nPlayerID)
+            if nPlayer ~= nil then
+                local aHero = nPlayer:GetAssignedHero()
+                local randNum = RandomInt(1,100)
+                if spawner_config.mosterWave >= 180  then
+                    if randNum <= 45 then
+                        SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                    else
+                        SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
+                    end
+                elseif spawner_config.mosterWave >= 70  then
+                    if randNum <= 35 then
+                        SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                    else
+                        SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
+                    end
+                elseif spawner_config.mosterWave == 60  then
+                    if randNum <= 25 then
+                        SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                    else
+                        SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
+                    end
+                elseif spawner_config.mosterWave == 50  then
+                    if randNum <= 15 then
+                        SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                    else
+                        SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
+                    end
+                elseif spawner_config.mosterWave == 40 then 
+                    if randNum <= 5 then
+                        SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                    elseif randNum <= 50 then
+                        SeriseSystem:CreateSeriesItem(aHero,3,1,2)        -- T2
+                    else
+                        SeriseSystem:CreateSeriesItem(aHero,2,1,1)        -- T1
+                    end
+                elseif spawner_config.mosterWave == 30 then
+                    if randNum <= 20 then
+                        SeriseSystem:CreateSeriesItem(aHero,3,1,2)       -- T2
+                    else
+                        SeriseSystem:CreateSeriesItem(aHero,2,1,1)       -- T1
+                    end
+                elseif spawner_config.mosterWave == 20 then
+                    SeriseSystem:CreateSeriesItem(aHero,2,1,1)         -- T1
+                end
+    
+                --无尽装备存档
+                Archive:SaveServerEqui(nPlayerID)
+            end
         end
+
     end
 end
 

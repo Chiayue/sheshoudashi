@@ -106,7 +106,14 @@ function Treasure_selected:OnAddTreasure(args)
     if hHero:IsNull() then
         return
     end
-
+    -- 技能
+    -- 判断当前等级
+    local hAbility = hHero:FindAbilityByName("upgrade_ability_core")
+    if hAbility == nil then
+        hAbility = hHero:AddAbility("upgrade_ability_core")
+        hAbility:SetLevel(1)
+    end
+    
     --移除已选择的宝物
     for i = 1, #GlobalVarFunc.player_treasure_list[nPlayerID] do
         if treasureName == GlobalVarFunc.player_treasure_list[nPlayerID][i] then
@@ -121,7 +128,7 @@ function Treasure_selected:OnAddTreasure(args)
         -- Ability:SetLevel(1)
         
         --添加宝物的modifier
-        hHero:AddNewModifier( hHero, nil, "modifier_"..treasureName, {} )
+        hHero:AddNewModifier( hHero, hAbility, "modifier_"..treasureName, {} )
     else
         -- 宝物既不是技能也不是物品的时候
         if treasureName == "mucai_xiaojiejin" then
@@ -192,7 +199,7 @@ function Treasure_selected:OnAddTreasure(args)
            if bHasZhendebuyaole == true then
                 Player_Data():AddPoint(nPlayerID,500)
                 PlayerResource:ModifyGold(nPlayerID, 20000, true, DOTA_ModifyGold_Unspecified)
-                hHero:AddNewModifier(hHero, nil, "modifier_gem_yezhendebuyaole", {})
+                hHero:AddNewModifier(hHero, hAbility, "modifier_gem_yezhendebuyaole", {})
            end
         end
     end
